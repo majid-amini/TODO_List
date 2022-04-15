@@ -15,7 +15,7 @@ function addNewTodo () {
         title: newTodoTitle
     }
 
-    inputElem.value = ''
+    inputElem.value = '';
 
     todosArray.push(newTodoObj)
     setLocalStorage(todosArray)
@@ -70,12 +70,9 @@ function getLocalStorage () {
         todosArray = []
     }
 
-    todosGenerator(todosArray)
+    todosGenerator(todosArray);
 
 }
-
-
-
 
 function clearTodos () {
     todosArray = []
@@ -83,8 +80,6 @@ function clearTodos () {
     localStorage.clear()
     localStorage.removeItem('todos')
 }
-
-
 
 
 window.addEventListener('load', getLocalStorage);
@@ -96,6 +91,9 @@ inputElem.addEventListener('keydown', function (event) {
         addNewTodo()
     }
 })
+
+
+
 
 submitForm.addEventListener('submit',function(event){
     event.preventDefault();
