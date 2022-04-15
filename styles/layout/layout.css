@@ -59,6 +59,9 @@ form button:hover {
 }
 .title_total {
     width: 100%;
+    max-height: 40rem;
+    overflow-y: auto;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -66,21 +69,29 @@ form button:hover {
     gap: 1rem;
 }
 .title_total .tasks_ul {
-    width: 23rem;
+    width: 50rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .title_total .tasks_ul .tasks_item {
+    width: 25rem;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     gap: 1rem;
     background-color: blue;
     padding: 1rem;
     border-radius: 1rem;
     margin-top: 1rem;
+    
 }
-.tasks_item span {
-    width: 100%;
+.tasks_item span.title-span {
+    max-width: 20rem;
+    overflow: hidden;
 }
+
 .clear_tasks {
     width: 30rem;
     margin-top: 1.5rem;
