@@ -69,12 +69,24 @@ function setlocalStorage(todosList) {
 
 function todosCreator(todosList) {
     todosList.forEach(function (todo){
-        console.log(todo);
+        // console.log(todo);
     })
 }
 
 
+function getLocalStorage() {
+    let localStorageTodos = JSON.parse(localStorage.getItem('todos'));
 
+    if (localStorageTodos) {
+        todosArray = localStorageTodos;
+    } else {
+        todosArray = [];
+    }
+    todosCreator(todosArray);
+}
+
+
+window.addEventListener('load',getLocalStorage);
 
 
 
