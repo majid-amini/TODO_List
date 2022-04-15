@@ -89,6 +89,7 @@ form button:hover {
 }
 .tasks_item span.title-span {
     max-width: 20rem;
+    color: snow;
     overflow: hidden;
 }
 
@@ -113,4 +114,7 @@ form button:hover {
 
 button, i {
     cursor: pointer;
+}
+i.delete {
+    color: snow;
 }

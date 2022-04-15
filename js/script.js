@@ -1,105 +1,102 @@
-let $ = document;
-const inputTask = $.querySelector('#input_task');
-const addTaskBtn = $.querySelector('.add_task');
-const ulElem = $.querySelector('.tasks_ul');
-const deleteBtn = $.querySelector('.delete');
-const addTodoForm = $.querySelector('.new_task_total');
-const clearContainer = $.querySelector('.clear_tasks')
+let $ = document
+const inputElem = $.querySelector('#input_task');
+const addButton = $.querySelector('.add_task');
 const clearBtn = $.querySelector('#clear');
+const ulElem = $.querySelector('.tasks_ul');
+const submitForm = $.querySelector ('.new_task_total');
 
-addTodoForm.addEventListener('submit',function(event){
-    event.preventDefault();
-})
+let todosArray = []
 
-let todosArray = [];
-
-inputTask.addEventListener('keydown',function(event){
-
-    let newTodoValue = event.target.value.trim();
-    
-    if (event.keyCode === 13) {
-        if (newTodoValue) {
-           addNewTodo(newTodoValue);
-           
-        }
-    }
-});
-
-
-
-function addNewTodo(newTodoValue){
-
+function addNewTodo () {
+    let newTodoTitle = inputElem.value
 
     let newTodoObj = {
-        id: todosArray.length +1,
-        title: newTodoValue
+        id: todosArray.length + 1,
+        title: newTodoTitle
     }
-    
-    todosArray.push(newTodoObj);
-    setlocalStorage(todosArray);
-    todosCreator(todosArray);
-    
-    
-    let newTodoLi = $.createElement('li');
-    newTodoLi.className = "tasks_item";
 
-    inputTask.value = '';
+    inputElem.value = ''
 
-    let newTodoTitleSpan = $.createElement('span');
-    newTodoTitleSpan.className = "title-span";
-    newTodoTitleSpan.innerHTML = newTodoValue;
+    todosArray.push(newTodoObj)
+    setLocalStorage(todosArray)
+    todosGenerator(todosArray)
+
+
+   
+    // inputElem.focus()
+}
+
+function setLocalStorage (todosList) {
+    localStorage.setItem('todos', JSON.stringify(todosList))
+}
+
+function todosGenerator (todosList) {
+
+    let  newTodoLiElem, newTodoSpanElem, newTodoDeleteBtn
+
+    ulElem.innerHTML = ''
+
+    todosList.forEach(function (todo) {
+        
+        newTodoLiElem = $.createElement('li');
+        newTodoLiElem.className = 'tasks_item';
+
+        newTodoSpanElem = $.createElement('span');
+        newTodoSpanElem.className = "title-span";
+        newTodoSpanElem.innerHTML = todo.title;
+        
+        newTodoDeleteBtn = $.createElement('i');
+        newTodoDeleteBtn.className = 'fa-solid fa-trash-can delete'
     
-    let newTodoDeleteIcon = $.createElement('i');
-    newTodoDeleteIcon.className = "fa-solid fa-trash-can delete";
 
-    newTodoDeleteIcon.addEventListener('click',function(event){
-        event.target.parentElement.remove();
+        newTodoLiElem.append(newTodoSpanElem, newTodoDeleteBtn)
+
+        ulElem.append(newTodoLiElem)
+
+        newTodoDeleteBtn.addEventListener('click',function(event){
+           event.target.parentElement.remove();
+            
+        })
+    
     })
-
-   newTodoLi.append(newTodoTitleSpan, newTodoDeleteIcon);
-
-    
-    ulElem.append(newTodoLi);
 }
 
-
-function setlocalStorage(todosList) {
-    localStorage.setItem('todos',JSON.stringify(todosList));
-}
-
-function todosCreator(todosList) {
-    todosList.forEach(function (todo){
-        // console.log(todo);
-    })
-}
-
-
-function getLocalStorage() {
-    let localStorageTodos = JSON.parse(localStorage.getItem('todos'));
+function getLocalStorage () {
+    let localStorageTodos = JSON.parse(localStorage.getItem('todos'))
 
     if (localStorageTodos) {
-        todosArray = localStorageTodos;
+        todosArray = localStorageTodos
     } else {
-        todosArray = [];
+        todosArray = []
     }
-    todosCreator(todosArray);
+
+    todosGenerator(todosArray)
+
 }
 
 
-window.addEventListener('load',getLocalStorage);
+
+
+function clearTodos () {
+    todosArray = []
+    todosGenerator(todosArray)
+    localStorage.clear()
+    localStorage.removeItem('todos')
+}
 
 
 
 
-
-
-// clearBtn.addEventListener('click',function(event){
-//     console.log(event.target.parentElement.parentElement.children)
-// })
-
-// function taskNumbers(newTodoLi) {
-//     let taskInfo = document.createElement('p');
+window.addEventListener('load', getLocalStorage);
+addButton.addEventListener('click', addNewTodo);
+clearBtn.addEventListener('click', clearTodos);
+inputElem.addEventListener('keydown', function (event) {
     
+    if (event.code === 'Enter') {
+        addNewTodo()
+    }
+})
 
-//     taskInfo.innerHTML = `you have ${} pending tasks`
-// }
+submitForm.addEventListener('submit',function(event){
+    event.preventDefault();
+})
